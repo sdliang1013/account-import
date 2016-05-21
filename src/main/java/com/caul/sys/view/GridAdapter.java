@@ -10,6 +10,7 @@ import cn.easybuild.pojo.StringPojo;
 public class GridAdapter<T extends StringPojo> extends Grid<T> {
 
     public GridAdapter(DataSet<T> dataSet) {
-        super(dataSet.getData(), dataSet.getPaging().getRecords());
+        super(dataSet.getData(),
+                dataSet.getPaging() != null ? dataSet.getPaging().getRecords() : 0);
     }
 }
