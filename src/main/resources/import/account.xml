@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<excelImport>
+    <repeatImport>
+        <![CDATA[
+			A2 = accountName,
+			B2 = qq,
+			C2 = mobile,
+		]]>
+        <endCode>End</endCode>
+    </repeatImport>
+
+    <!-- 校验器定义 -->
+    <validators>
+        <validator name="mobileValidator" value="com.caul.core.excelimport.validate.MobileValidator"/>
+        <validator name="qqValidator" value="com.caul.core.excelimport.validate.QQValidator"/>
+    </validators>
+
+    <!-- 需要校验的单元格 -->
+    <cell-validators>
+        <cell-validator cellname="B2">
+            <validator name="qqValidator"/>
+        </cell-validator>
+        <cell-validator cellname="C2">
+            <validator name="mobileValidator"/>
+        </cell-validator>
+    </cell-validators>
+
+</excelImport>

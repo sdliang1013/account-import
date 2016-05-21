@@ -1,0 +1,31 @@
+[
+  {
+    "id": 1,
+    "text": "派送管理",
+    "iconCls": "icon-ok",
+    "state": "open",
+    "attributes": {
+      "url": "account/manage"
+    }
+  },
+  {
+    "id": 2,
+    "text": "账号管理",
+    "iconCls": "icon-lock",
+    "state": "open",
+    "attributes": {
+      "url": "user/manage",
+      "permission":"admin"
+    }
+  },
+  {
+    "id": 3,
+    "text": "导入/清理",
+    "iconCls": "icon-more",
+    "state": "open",
+    "attributes": {
+      "url": "account/import-clear",
+      "permission":"admin"
+    }
+  }
+]

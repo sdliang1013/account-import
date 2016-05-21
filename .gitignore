@@ -2,8 +2,11 @@ target/
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
+/web/WEB-INF/classes
+/web/WEB-INF/lib
 pom.xml.next
 release.properties
 dependency-reduced-pom.xml
+/account-import.iml
 buildNumber.properties
 .mvn/timing.properties

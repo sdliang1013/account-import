@@ -1,0 +1,46 @@
+<%@ page language="java" pageEncoding="utf-8" %>
+<%@ include file="/WEB-INF/jsp/mgr/layout/import.jsp" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>记录管理</title>
+    <%@ include file="/WEB-INF/jsp/mgr/layout/header.jsp" %>
+    <script type="text/javascript" src="${path}js/account/Account.js"></script>
+    <script type="text/javascript">
+        var accountAdd = new account.AccountAdd();
+        $(document).ready(accountAdd.init);
+    </script>
+</head>
+<body>
+<div class="easyui-layout">
+    <form id="formAccountAdd" method="post">
+
+        <div class="div-row">
+            <div class="label2">账号：</div>
+            <div class="input2">
+                <input class="easyui-textbox" type="text" id="txtAccountName" name="accountName"/>
+            </div>
+        </div>
+        <div class="div-row">
+            <div class="label2">QQ：</div>
+            <div class="input2">
+                <input class="easyui-textbox" type="text" id="txtQq" name="qq"/>
+            </div>
+        </div>
+        <div class="div-row">
+            <div class="label2">手机号：</div>
+            <div class="input2">
+                <input class="easyui-textbox" id="mobile" name="mobile"/>
+            </div>
+        </div>
+
+        <div class="div-row">
+            <div class="label">
+                <a id="btnSave" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <entry key="db.driver">com.mysql.jdbc.Driver</entry>
+    <entry key="db.url">jdbc:mysql://localhost:3306/ai</entry>
+    <!--<entry key="db.url">jdbc:mysql://localhost:3306/corplus</entry>-->
+    <entry key="db.username">ai</entry>
+    <entry key="db.password">accountimport</entry>
+
+    <entry key="encrypt.position">7</entry>
+    <entry key="encrypt.code">T</entry>
+
+    <entry key="xml.import.account">./import/account.xml</entry>
+
+</properties>

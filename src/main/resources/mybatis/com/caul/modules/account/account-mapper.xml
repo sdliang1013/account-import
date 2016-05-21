@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.caul.modules.account.Account">
+
+    <sql id="tableName">t_account</sql>
+    <sql id="tabTemp">t_account_temp</sql>
+
+    <!-- 插入记录 -->
+    <insert id="insertAccount" parameterType="Account">
+        insert into
+        <include refid="tableName"/>
+        (id, qq, account_name, mobile, send_state,arbitrage,create_time)
+        values
+        (#{id}, #{qq}, #{accountName}, #{mobile}, #{sendState}, #{arbitrage},now())
+    </insert>
+
+    <insert id="batchInsertTemp" parameterType="list">
+        insert into
+        <include refid="tabTemp"/>
+        (id, qq, account_name, mobile, send_state,arbitrage,create_time)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.id}, #{item.qq}, #{item.accountName}, #{item.mobile}, #{item.sendState}, #{item.arbitrage},now())
+        </foreach>
+    </insert>
+
+    <delete id="deleteAccountById" parameterType="string">
+        DELETE FROM
+        <include refid="tableName"/>
+        WHERE id=#{id}
+    </delete>
+
+    <delete id="batchDelete">
+        DELETE FROM
+        <include refid="tableName"/>
+        WHERE id IN
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <delete id="truncateTempData">
+        TRUNCATE TABLE
+        <include refid="tabTemp"/>
+    </delete>
+
+    <delete id="clear" parameterType="date">
+        DELETE FROM
+        <include refid="tableName"/>
+        WHERE create_time &lt; #{dateEnd}
+    </delete>
+
+    <!-- 根据主键更新记录 -->
+    <update id="updateAccount" parameterType="Account">
+        update
+        <include refid="tableName"/>
+        set
+        <if test="account_name != null">account_name = #{accountName},</if>
+        <if test="mobile != null">mobile = #{mobile},</if>
+        <if test="qq != null">qq = #{qq},</if>
+        id = id
+        where id = #{id}
+    </update>
+
+
+    <update id="batchUpdate">
+        UPDATE
+        <include refid="tableName"/>
+        SET
+        <if test="sendState != null and sendState > 0">
+            send_state = #{sendState},
+        </if>
+        <if test="arbitrage != null">
+            arbitrage = #{arbitrage},
+        </if>
+        id = id
+        WHERE id IN
+        <foreach collection="ids" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+
+    <update id="joinTempData">
+        INSERT INTO
+        <include refid="tableName"/>
+        SELECT * FROM
+        <include refid="tabTemp"/>
+        t WHERE NOT EXISTS
+        (SELECT 1 FROM
+        <include refid="tableName"/>
+        a WHERE (a.qq != '无' AND a.qq = t.qq) OR (a.mobile != '无' AND a.mobile = t.mobile))
+    </update>
+
+    <select id="getAccountById" resultType="User">
+        select * from
+        <include refid="tableName"/>
+        where id=#{id}
+    </select>
+
+    <select id="queryByParam" resultType="Account">
+        select * from
+        <include refid="tableName"/>
+        where 1=1
+        <if test="accountName != null and accountName != ''">
+            and account_name like CONCAT('%',#{accountName},'%')
+        </if>
+        <if test="qq != null and qq != ''">
+            and qq = #{qq}
+        </if>
+        <if test="mobile != null and mobile != ''">
+            and mobile = #{mobile}
+        </if>
+        <if test="sendState != null">
+            and send_state = #{sendState}
+        </if>
+        <if test="arbitrage != null">
+            and arbitrage = #{arbitrage}
+        </if>
+        order by qq,mobile
+    </select>
+
+    <select id="existsAccount" resultType="int">
+        SELECT COUNT(1) FROM
+        <include refid="tableName"/>
+        where 1=1
+        <if test="qq != null and qq != ''">
+            and qq = #{qq}
+        </if>
+        <if test="mobile != null and mobile != ''">
+            and mobile = #{mobile}
+        </if>
+    </select>
+
+</mapper>

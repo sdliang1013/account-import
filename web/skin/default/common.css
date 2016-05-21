@@ -1,0 +1,522 @@
+@charset 'utf-8';
+/* CSS reset */
+* {
+    font-family: "微软雅黑", 'Microsoft YaHei', Arial, Helvetica, sans-serif;
+    font-size: 12px;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    position: relative;
+    top: 0;
+    left: 0;
+    -webkit-user-select: none;
+    -webkit-text-size-adjust: none;
+}
+
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, label, form, fieldset, legend, input, button, textarea, p, section, blockquote, th, td, strong, a {
+    padding: 0;
+    margin: 0;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+a {
+    text-decoration: none;
+    /*color: #FFF;*/
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-size: 100%;
+    font-weight: normal;
+}
+
+*:link, *:visited, *:hover, *:active {
+    -webkit-tap-highlight-color: transparent;
+}
+
+.panel-body::-webkit-scrollbar {
+    width: 0;
+}
+
+.div-row div {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.div-row .label {
+    float: left;
+    width: 96%;
+    padding: 5px;
+    text-align: center;
+}
+
+.div-row .label2 {
+    float: left;
+    width: 30%;
+    padding-right: 5px;
+    text-align: right;
+}
+
+.div-row .input2 {
+    float: left;
+    width: 66%;
+    padding-left: 5px;
+}
+
+.div-row .label4 {
+    float: left;
+    width: 18%;
+    padding-right: 5px;
+    text-align: right;
+}
+
+.div-row .input4 {
+    float: left;
+    width: 30%;
+    padding-left: 5px;
+}
+
+.div-row .label6 {
+    float: left;
+    width: 12%;
+    padding-right: 5px;
+    text-align: right;
+}
+
+.div-row .input6 {
+    float: left;
+    width: 20%;
+    padding-left: 5px;
+}
+
+html .layout {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+/*
+ * xx.css V0.1 (象形CSS库)
+ * ——oplis 2016.3.14
+ */
+
+/*
+ * ——字体
+ * 字体-加粗 ： xx-FtCu
+ * 字体-斜体 ： xx-FtXie
+ * 字体-上划线 ：xx-FtUp
+ * 字体-删除线 ：xx-FtDel
+ * 字体-下划线 ：xx-FtDown
+
+ * ——布局
+ * 子元素浮动： xx-fix
+ * 子元素居中： xx-tac
+ * DIV顶部横线： xx-BdT
+ * DIV底部横线： xx-BdB
+ */
+
+/* CSS reset */
+* {
+    font-family: "微软雅黑", 'Microsoft YaHei', Arial, Helvetica, sans-serif;
+    font-size: 1em;
+}
+
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, label, form, fieldset, legend, input, button, textarea, p, section, blockquote, th, td, strong, a {
+    padding: 0;
+    border: 0;
+    margin: 0;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+fieldset, img {
+    border: 0;
+}
+
+var, em, strong {
+    font-style: normal;
+}
+
+address, caption, cite, code, dfn, em, span, strong, th, var, optgroup, {
+    font-style: inherit;
+    font-weight: inherit;
+}
+
+del, ins {
+    text-decoration: none;
+}
+
+li, i, b {
+    list-style: none;
+}
+
+caption, th {
+    text-align: left;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-size: 100%;
+    font-weight: normal;
+}
+
+q:before, q:after {
+    content: '';
+}
+
+abbr, acronym {
+    border: 0;
+    font-variant: normal;
+}
+
+sup {
+    vertical-align: baseline;
+}
+
+sub {
+    vertical-align: baseline;
+}
+
+legend {
+    color: #000;
+}
+
+input, button, textarea, select, optgroup, option, i, b {
+    font-family: inherit;
+    font-size: inherit;
+    font-style: inherit;
+    font-weight: inherit;
+}
+
+input, button, textarea, select {
+    *font-size: 100%;
+}
+
+*:link, *:visited, *:hover, *:active {
+    -webkit-tap-highlight-color: transparent;
+}
+
+input {
+    outline: none;
+}
+
+a {
+    text-decoration: none;
+    /*color: #FFF;*/
+}
+
+/*子元素有浮动时*/
+html body .xx-fix {
+    *zoom: 1;
+}
+
+.fix:after {
+    display: block;
+    content: "clear";
+    height: 0;
+    clear: both;
+    overflow: hidden;
+    visibility: hidden;
+}
+
+html body .xx-FtCu {
+    font-weight: bold;
+}
+
+html body .xx-FtXie {
+    font-style: italic;
+}
+
+html body .xx-FtUp {
+    text-decoration: overline;
+}
+
+html body .xx-FtDel {
+    text-decoration: line-through;
+}
+
+html body .xx-FtDown {
+    text-decoration: underline;
+}
+
+html body .xx-BdT {
+    border-top: 1px solid #95B8E7;
+}
+
+html body .xx-BdB {
+    border-bottom: 1px solid #95B8E7;
+}
+
+html body .xx-tac {
+    text-align: center;
+}
+
+html body .none {
+    display: none;
+}
+
+.inblock {
+    display: inline-block;
+    zoom: 1;
+    *display: inline;
+    float: none;
+}
+
+.db {
+    display: block;
+}
+
+.wh {
+    width: 100%;
+    height: 100%;
+}
+
+.dbw {
+    display: block;
+    width: 100%;
+}
+
+.dbh {
+    display: block;
+    height: 100%;
+}
+
+.oh {
+    overflow: hidden;
+}
+
+.mga {
+    margin: 0 auto;
+}
+
+.tac {
+    text-align: center;
+}
+
+.wto {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.fix {
+    *zoom: 1;
+}
+
+.fix:after {
+    display: block;
+    content: "clear";
+    height: 0;
+    clear: both;
+    overflow: hidden;
+    visibility: hidden;
+}
+
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+.prt {
+    position: relative;
+    top: 0;
+    left: 0;
+}
+
+.prtr {
+    position: relative;
+    top: 0;
+    right: 0;
+}
+
+.prb {
+    position: relative;
+    bottom: 0;
+    left: 0;
+}
+
+.prbr {
+    position: relative;
+    bottom: 0;
+    right: 0;
+}
+
+.pat {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.patr {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.pab {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.pabr {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.pft {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.pftr {
+    position: fixed;
+    top: 0;
+    right: 0;
+}
+
+.pfb {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+
+.pfbr {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
+
+.z1 {
+    z-index: 111;
+}
+
+.z2 {
+    z-index: 222;
+}
+
+.z3 {
+    z-index: 333;
+}
+
+.z4 {
+    z-index: 444;
+}
+
+.z5 {
+    z-index: 555;
+}
+
+.z6 {
+    z-index: 666;
+}
+
+.z7 {
+    z-index: 777;
+}
+
+.z8 {
+    z-index: 888;
+}
+
+.z9 {
+    z-index: 999;
+}
+
+html body .xx-Pdr10p {
+    padding-right: 10%;
+}
+
+html body .xx-IpBox {
+    padding: 5px 5%;
+    height: 32px;
+    line-height: 32px;
+}
+
+html body .xx-IpBox .xx-IpTxt {
+    display: block;
+    float: left;
+    padding: 0 10px 0 10px;
+    width: 100px;
+    text-align: right;
+}
+
+html body .xx-IpBox .xx-IpCon {
+    float: left;
+}
+
+html body .xx-IpCon1 {
+    float: left;
+    padding: 5px 0%;
+    height: 32px;
+    line-height: 32px;
+    width: 100%;
+}
+
+html body .xx-IpCon1 .xx-IpTxt {
+    display: block;
+    float: left;
+    padding: 0 10px 0 10px;
+    width: 100px;
+    text-align: right;
+}
+
+html body .xx-IpCon1 .xx-IpCon {
+    display: block;
+    float: left;
+}
+
+html body .xx-IpCon2 {
+    float: left;
+    padding: 5px 0%;
+    height: 32px;
+    line-height: 32px;
+    width: 50%;
+}
+
+html body .xx-IpCon2 .xx-IpTxt {
+    display: block;
+    float: left;
+    padding: 0 10px 0 10px;
+    width: 100px;
+    text-align: right;
+}
+
+html body .xx-IpCon2 .xx-IpCon {
+    display: block;
+    float: left;
+}
+
+html body .xx-IpCon3 {
+    float: left;
+    padding: 5px 0%;
+    height: 32px;
+    line-height: 32px;
+    width: 33%;
+}
+
+html body .xx-IpCon3 .xx-IpTxt {
+    display: block;
+    float: left;
+    padding: 0 10px 0 10px;
+    width: 100px;
+    text-align: right;
+}
+
+html body .xx-IpCon3 .xx-IpCon {
+    float: left;
+}

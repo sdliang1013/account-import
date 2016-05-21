@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+            http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+
+    <context:component-scan base-package="com.caul.modules" use-default-filters="true">
+        <context:exclude-filter type="annotation"
+                                expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+    <mvc:annotation-driven/>
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="driverClass" value="${db.driver}"/>
+        <property name="jdbcUrl" value="${db.url}"/>
+        <property name="user" value="${db.username}"/>
+        <property name="password" value="${db.password}"/>
+        <property name="testConnectionOnCheckout" value="true"/>
+    </bean>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <property name="mapperLocations" value="classpath*:**/*-mapper.xml"/>
+        <property name="typeAliasesPackage" value="com.caul.modules"/>
+        <property name="typeAliasesSuperType" value="java.io.Serializable"/>
+    </bean>
+
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <tx:advice id="txAdvice"
+               transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="*" rollback-for="cn.easybuild.kernel.exceptions.ApplicationException"/>
+            <tx:method name="*" propagation="REQUIRED" isolation="DEFAULT"/>
+
+            <tx:method name="query*" propagation="SUPPORTS" isolation="DEFAULT" read-only="true"/>
+            <tx:method name="get*" propagation="SUPPORTS" isolation="DEFAULT" read-only="true"/>
+
+        </tx:attributes>
+    </tx:advice>
+
+    <aop:config>
+        <aop:advisor
+                pointcut="execution(* com.caul.modules..*Service*.*(..))"
+                advice-ref="txAdvice"/>
+
+    </aop:config>
+
+    <bean id="applicationConfig" class="com.caul.modules.config.ApplicationConfig">
+        <property name="encryptCode" value="${encrypt.code}"/>
+        <property name="encryptPosition" value="${encrypt.position}"/>
+        <property name="xmlImportAccount" value="${xml.import.account}"/>
+    </bean>
+
+    <bean id="springContextHolder" class="com.caul.sys.spring.SpringContextHolder"></bean>
+
+</beans>
+
