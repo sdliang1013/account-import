@@ -7,7 +7,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%
     String path = request.getContextPath();
-    if (path.length() > 1) {
+    if (!path.endsWith("/")) {
         path = path + "/";
     }
 //    path = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
