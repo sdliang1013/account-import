@@ -14,3 +14,7 @@ Constants.role = {
 };
 
 Constants.currentUser = {};
+
+Constants.UserType = {
+    Manage: 1
+}

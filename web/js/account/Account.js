@@ -105,6 +105,9 @@ account.AccountMgr = function () {
     }
 
     me.toAdd = function () {
+        if (!AppHelper.Sys.checkPermission()) {
+            return false;
+        }
         var url = AppHelper.Url.getManageUrl(account.MODULE_ACCOUNT + "/to-add");
         $("#detailWindow").window({
             title: "增加记录",
@@ -116,6 +119,9 @@ account.AccountMgr = function () {
     };
 
     me.toEdit = function () {
+        if (!AppHelper.Sys.checkPermission()) {
+            return false;
+        }
         var record = easyuiExt.DataGrid.getSelected($('#accountGrid'));
         if (!record) {
             return false;
@@ -131,6 +137,9 @@ account.AccountMgr = function () {
     };
 
     me.delete = function () {
+        if(!AppHelper.Sys.checkPermission()){
+            return false;
+        }
         var records = easyuiExt.DataGrid.getSelected($('#accountGrid'), true);
         if (!records || !window.confirm("确定删除吗?")) {
             return false;

@@ -1,5 +1,8 @@
 <%@ page language="java" pageEncoding="utf-8" %>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <link rel="stylesheet" type="text/css" href="${path}component/easyui/themes/icon.css">
 <link rel="stylesheet" type="text/css" href="${path}component/easyui/themes/${skin}/easyui.css">
 <link rel="stylesheet" type="text/css" href="${path}skin/${skin}/easyui_icons.css">

@@ -10,7 +10,7 @@
     if (path.length() > 1) {
         path = path + "/";
     }
-    path = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
+//    path = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
 
     Object currentUser = session.getAttribute(Constants.CURRENT_MEMBER);
 

@@ -57,7 +57,7 @@
         update
         <include refid="tableName"/>
         set
-        <if test="account_name != null">account_name = #{accountName},</if>
+        <if test="accountName != null">account_name = #{accountName},</if>
         <if test="mobile != null">mobile = #{mobile},</if>
         <if test="qq != null">qq = #{qq},</if>
         id = id
@@ -93,7 +93,7 @@
         a WHERE (a.qq != '无' AND a.qq = t.qq) OR (a.mobile != '无' AND a.mobile = t.mobile))
     </update>
 
-    <select id="getAccountById" resultType="User">
+    <select id="getAccountById" resultType="Account">
         select * from
         <include refid="tableName"/>
         where id=#{id}

@@ -386,6 +386,24 @@ if (typeof Function.prototype.extend != 'function') {
                     }
                 });
                 return admin;
+            },
+            checkPermission: function () {
+                var admin = false;
+                $.ajax({
+                    url: AppHelper.Url.getManageUrl(sys.MODULE_PERMISSION+ "/check", null),
+                    async: false,
+                    success: function (resultJson, textStatus) {
+                        if (AppHelper.Ajax.isSuccess(resultJson, textStatus)) {
+                            admin = true;
+                        } else {
+                            $.messager.alert("错误", AppHelper.Ajax.getErrorMsg(resultJson));
+                        }
+                    },
+                    error: function (data, textStatus, e) {
+                        $.messager.alert('错误', e.message);
+                    }
+                });
+                return admin;
             }
         },
         Win: {

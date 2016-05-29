@@ -54,8 +54,7 @@ sys.Index = function () {
     me.onClickMenu = function (node) {
         if (node.state == "open" && !node.children) {
             if (node.attributes.permission == Constants.role.admin
-                && !AppHelper.Sys.isAdmin()) {
-                $.messager.alert('错误', '对不起,您没有该操作权限!');
+                && !AppHelper.Sys.checkPermission()) {
                 return false;
             }
             me.openTab({

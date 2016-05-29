@@ -22,7 +22,8 @@ if (typeof user == 'undefined') {
  */
 if (typeof sys == 'undefined') {
     var sys = {
-        MODULE_INDEX: "index/"
+        MODULE_INDEX: "index/",
+        MODULE_PERMISSION: "/permission"
     };
 }
 
