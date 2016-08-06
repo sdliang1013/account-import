@@ -20,10 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -96,6 +93,7 @@ public class AccountServiceImpl extends StringPojoAppBaseServiceImpl<Account>
         if (entity.getSendState() == 0) {
             entity.setSendState(SendState.Unsent.getCode());
         }
+        entity.setCreateTime(new Date());
         return super.save(entity);
     }
 
@@ -110,14 +108,33 @@ public class AccountServiceImpl extends StringPojoAppBaseServiceImpl<Account>
                     continue;
                 }
                 account = new Account();
+                removeEmptyValue(dataMap);
                 BeanHelper.copyExitProperties(account, dataMap);
                 account.setId(UUIDGenerator.generateUUID());
+                account.setCreateTime(new Date());
                 list.add(account);
             }
         } catch (Exception e) {
             throw new BusinessException("拷贝Excel数据错误:" + e.getMessage(), e);
         }
         return list;
+    }
+
+    /**
+     * 取出里面的空值
+     *
+     * @param dataMap
+     * @return
+     */
+    private Map<String, String> removeEmptyValue(Map<String, String> dataMap) {
+        Iterator<Map.Entry<String, String>> iterator = dataMap.entrySet().iterator();
+
+        while (iterator.hasNext()) {
+            if (StringUtils.isEmpty(iterator.next().getValue())) {
+                iterator.remove();
+            }
+        }
+        return dataMap;
     }
 
 }

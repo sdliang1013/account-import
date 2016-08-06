@@ -13,7 +13,7 @@
         <include refid="tableName"/>
         (id, qq, account_name, mobile, handsel, send_state,arbitrage,create_time)
         values
-        (#{id}, #{qq}, #{accountName}, #{mobile}, #{handsel}, #{sendState}, #{arbitrage},now())
+        (#{id}, #{qq}, #{accountName}, #{mobile}, #{handsel}, #{sendState}, #{arbitrage}, #{createTime})
     </insert>
 
     <insert id="batchInsertTemp" parameterType="list">
@@ -23,7 +23,7 @@
         values
         <foreach collection="list" item="item" separator=",">
             (#{item.id}, #{item.qq}, #{item.accountName}, #{item.mobile}, #{item.handsel}, #{item.sendState},
-            #{item.arbitrage},now())
+            #{item.arbitrage}, #{item.createTime})
         </foreach>
     </insert>
 
@@ -120,7 +120,7 @@
         <if test="arbitrage != null">
             and arbitrage = #{arbitrage}
         </if>
-        order by qq,mobile
+        order by create_time desc, qq,mobile
     </select>
 
     <select id="existsAccount" resultType="int">
