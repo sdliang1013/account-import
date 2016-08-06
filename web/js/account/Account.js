@@ -60,6 +60,7 @@ account.AccountMgr = function () {
                 {field: 'accountName', title: '账号', width: 200},
                 {field: 'qq', title: 'QQ', width: 200},
                 {field: 'mobile', title: '手机号', width: 200},
+                {field: 'handsel', title: '彩金', width: 100},
                 {
                     field: 'sendState', title: '派送状态', width: 100,
                     formatter: easyuiExt.DataGrid.enumFormatter,
@@ -137,7 +138,7 @@ account.AccountMgr = function () {
     };
 
     me.delete = function () {
-        if(!AppHelper.Sys.checkPermission()){
+        if (!AppHelper.Sys.checkPermission()) {
             return false;
         }
         var records = easyuiExt.DataGrid.getSelected($('#accountGrid'), true);

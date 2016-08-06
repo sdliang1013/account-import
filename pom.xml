@@ -16,6 +16,18 @@
 
     <dependencies>
 
+        <!--easybuild-->
+        <dependency>
+            <groupId>cn.easybuild</groupId>
+            <artifactId>easybuild-pojo</artifactId>
+            <version>4.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.easybuild</groupId>
+            <artifactId>easybuild-core-extends</artifactId>
+            <version>4.0.4-SNAPSHOT</version>
+        </dependency>
+
         <!-- java standard -->
         <dependency>
             <groupId>jstl</groupId>
@@ -297,23 +309,6 @@
             <version>2.3.0</version>
         </dependency>
 
-        <!--easybuild-->
-        <dependency>
-            <groupId>cn.easybuild</groupId>
-            <artifactId>easybuild-pojo</artifactId>
-            <version>4.0.2</version>
-        </dependency>
-        <dependency>
-            <groupId>cn.easybuild</groupId>
-            <artifactId>easybuild-core</artifactId>
-            <version>4.0.5</version>
-        </dependency>
-        <dependency>
-            <groupId>cn.easybuild</groupId>
-            <artifactId>easybuild-core-extends</artifactId>
-            <version>4.0.4</version>
-        </dependency>
-
         <!-- test framework -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -430,7 +425,9 @@
 
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
+                <version>2.3</version>
                 <configuration>
+                    <resourceEncoding>UTF-8</resourceEncoding>
                     <webappDirectory>${basedir}/web</webappDirectory>
                     <warSourceDirectory>${basedir}/web</warSourceDirectory>
                     <webResources>

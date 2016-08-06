@@ -5,6 +5,7 @@
 			A2 = accountName,
 			B2 = qq,
 			C2 = mobile,
+			D2 = handsel,
 		]]>
         <endCode>End</endCode>
     </repeatImport>
@@ -13,6 +14,7 @@
     <validators>
         <validator name="mobileValidator" value="com.caul.core.excelimport.validate.MobileValidator"/>
         <validator name="qqValidator" value="com.caul.core.excelimport.validate.QQValidator"/>
+        <validator name="handselValidator" value="com.caul.core.excelimport.validate.HandselValidator"/>
     </validators>
 
     <!-- 需要校验的单元格 -->
@@ -22,6 +24,9 @@
         </cell-validator>
         <cell-validator cellname="C2">
             <validator name="mobileValidator"/>
+        </cell-validator>
+        <cell-validator cellname="D2">
+            <validator name="handselValidator"/>
         </cell-validator>
     </cell-validators>
 

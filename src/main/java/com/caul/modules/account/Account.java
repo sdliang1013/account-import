@@ -17,6 +17,7 @@ public class Account extends StringPojo {
     private int sendState = SendState.Unsent.getCode();//派送状态(未派送,已派送,已拒绝)
     private boolean arbitrage = false;//是否套利
     private Date createTime;//创建时间
+    private Integer handsel = 0;//彩金
 
     public String getAccountName() {
         return accountName;
@@ -64,5 +65,13 @@ public class Account extends StringPojo {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public Integer getHandsel() {
+        return handsel;
+    }
+
+    public void setHandsel(Integer handsel) {
+        this.handsel = handsel;
     }
 }

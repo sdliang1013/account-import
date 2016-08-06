@@ -11,18 +11,19 @@
     <insert id="insertAccount" parameterType="Account">
         insert into
         <include refid="tableName"/>
-        (id, qq, account_name, mobile, send_state,arbitrage,create_time)
+        (id, qq, account_name, mobile, handsel, send_state,arbitrage,create_time)
         values
-        (#{id}, #{qq}, #{accountName}, #{mobile}, #{sendState}, #{arbitrage},now())
+        (#{id}, #{qq}, #{accountName}, #{mobile}, #{handsel}, #{sendState}, #{arbitrage},now())
     </insert>
 
     <insert id="batchInsertTemp" parameterType="list">
         insert into
         <include refid="tabTemp"/>
-        (id, qq, account_name, mobile, send_state,arbitrage,create_time)
+        (id, qq, account_name, mobile, handsel, send_state,arbitrage,create_time)
         values
         <foreach collection="list" item="item" separator=",">
-            (#{item.id}, #{item.qq}, #{item.accountName}, #{item.mobile}, #{item.sendState}, #{item.arbitrage},now())
+            (#{item.id}, #{item.qq}, #{item.accountName}, #{item.mobile}, #{item.handsel}, #{item.sendState},
+            #{item.arbitrage},now())
         </foreach>
     </insert>
 
@@ -60,6 +61,7 @@
         <if test="accountName != null">account_name = #{accountName},</if>
         <if test="mobile != null">mobile = #{mobile},</if>
         <if test="qq != null">qq = #{qq},</if>
+        <if test="handsel != null">handsel = #{handsel},</if>
         id = id
         where id = #{id}
     </update>

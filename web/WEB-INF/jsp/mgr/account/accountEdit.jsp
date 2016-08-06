@@ -36,11 +36,15 @@
                 <input class="easyui-textbox" id="mobile" name="mobile"/>
             </div>
         </div>
-
         <div class="div-row">
-            <div class="label">
-                <a id="btnSave" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a>
+            <div class="label2">彩金：</div>
+            <div class="input2">
+                <input class="easyui-numberbox" id="handsel" name="handsel"/>
             </div>
+        </div>
+
+        <div class="xx-btnBottom">
+            <a id="btnSave" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a>
         </div>
     </form>
 </div>
