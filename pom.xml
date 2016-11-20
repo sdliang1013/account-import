@@ -24,8 +24,13 @@
         </dependency>
         <dependency>
             <groupId>cn.easybuild</groupId>
+            <artifactId>easybuild-core</artifactId>
+            <version>4.0.5</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.easybuild</groupId>
             <artifactId>easybuild-core-extends</artifactId>
-            <version>4.0.4-SNAPSHOT</version>
+            <version>4.0.4</version>
         </dependency>
 
         <!-- java standard -->

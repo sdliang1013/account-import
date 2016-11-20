@@ -18,16 +18,16 @@
     </validators>
 
     <!-- 需要校验的单元格 -->
-    <cell-validators>
-        <cell-validator cellname="B2">
-            <validator name="qqValidator"/>
-        </cell-validator>
-        <cell-validator cellname="C2">
-            <validator name="mobileValidator"/>
-        </cell-validator>
-        <cell-validator cellname="D2">
-            <validator name="handselValidator"/>
-        </cell-validator>
-    </cell-validators>
+    <!--<cell-validators>-->
+        <!--<cell-validator cellname="B2">-->
+            <!--<validator name="qqValidator"/>-->
+        <!--</cell-validator>-->
+        <!--<cell-validator cellname="C2">-->
+            <!--<validator name="mobileValidator"/>-->
+        <!--</cell-validator>-->
+        <!--<cell-validator cellname="D2">-->
+            <!--<validator name="handselValidator"/>-->
+        <!--</cell-validator>-->
+    <!--</cell-validators>-->
 
 </excelImport>

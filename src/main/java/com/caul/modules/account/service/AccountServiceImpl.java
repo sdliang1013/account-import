@@ -88,7 +88,8 @@ public class AccountServiceImpl extends StringPojoAppBaseServiceImpl<Account>
     @Override
     public String save(Account entity) {
         if (accountDao.existsAccount(entity)) {
-            throw new InvalidOperationException("该QQ或手机号已存在!");
+            throw new InvalidOperationException(
+                    StringUtils.defaultIfEmpty(entity.getMobile(), entity.getQq()) + "QQ或手机号已存在!");
         }
         if (entity.getSendState() == 0) {
             entity.setSendState(SendState.Unsent.getCode());
