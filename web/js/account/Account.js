@@ -355,7 +355,9 @@ account.AccountImport = function () {
                 return $("#formAccountImport").form("validate");
             },
             success: function (data) {
-                AppHelper.Ajax.defaultResult(AppHelper.Json.valueOf(data), AppHelper.Status.Success);
+                var dataObj = AppHelper.Json.valueOf(data);
+                AppHelper.Ajax.defaultResult(dataObj,
+                    typeof dataObj == "object" ? AppHelper.Status.Success : "error");
             },
             error: function (data, status, e) {
                 $.messager.alert("失败", e.message, "error");
@@ -382,7 +384,9 @@ account.AccountClear = function () {
                     $("#formAccountClear").form("submit", {
                         url: AppHelper.Url.getManageUrl(account.MODULE_ACCOUNT + "/clear"),
                         success: function (data) {
-                            AppHelper.Ajax.defaultResult(data, AppHelper.Status.Success);
+                            var dataObj = AppHelper.Json.valueOf(data);
+                            AppHelper.Ajax.defaultResult(dataObj,
+                                typeof dataObj == "object" ? AppHelper.Status.Success : "error");
                         },
                         error: function (data, status, e) {
                             $.messager.alert("失败", e.message, "error");
