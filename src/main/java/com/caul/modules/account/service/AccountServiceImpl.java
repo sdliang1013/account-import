@@ -30,6 +30,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class AccountServiceImpl extends StringPojoAppBaseServiceImpl<Account>
         implements AccountService {
 
+    private static int LIMIT_COUNT = 1000;
+
     private AccountDao accountDao;
 
     private ApplicationConfig applicationConfig;
@@ -71,13 +73,23 @@ public class AccountServiceImpl extends StringPojoAppBaseServiceImpl<Account>
                 applicationConfig.getXmlImportAccount());
         SimpleExcelData excelData =
                 ExcelImportUtil.simpleReadExcel(xmlStream, inputStream, closeIS);
-        List<Account> list = toAccountList(excelData);
         //TODO:写入临时表
-        accountDao.batchInsertTemp(list);
+        batchInsertTemp(excelData);
         //TODO:临时表写入账号表
         accountDao.joinTempData();
         //TODO:清除临时表
         accountDao.truncateTempData();
+    }
+
+    private void batchInsertTemp(SimpleExcelData excelData) {
+
+        if(excelData.getRepeatData().size() > LIMIT_COUNT){
+            throw new BusinessException(
+                    "数量太大,最大允许行" + LIMIT_COUNT +"记录.");
+        }
+        //TODO: 考虑多线程
+        List<Account> list = toAccountList(excelData);
+        accountDao.batchInsertTemp(list);
     }
 
     @Override

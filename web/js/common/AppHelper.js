@@ -197,7 +197,7 @@ if (typeof Function.prototype.extend != 'function') {
         Ajax: {
             isSuccess: function (resultJson, textStatus) {
                 return !resultJson.exception && AppHelper.Status.Success == textStatus
-                    && (resultJson.status ? AppHelper.Code.Success == resultJson.status : true);
+                    && (resultJson.status ? AppHelper.Code.Success == resultJson.status : false);
             },
             getErrorMsg: function (resultJson) {
                 return resultJson["exception_message"] || resultJson.exception;

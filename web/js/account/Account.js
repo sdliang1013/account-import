@@ -355,7 +355,7 @@ account.AccountImport = function () {
                 return $("#formAccountImport").form("validate");
             },
             success: function (data) {
-                AppHelper.Ajax.defaultResult(data, AppHelper.Status.Success);
+                AppHelper.Ajax.defaultResult(AppHelper.Json.valueOf(data), AppHelper.Status.Success);
             },
             error: function (data, status, e) {
                 $.messager.alert("失败", e.message, "error");
