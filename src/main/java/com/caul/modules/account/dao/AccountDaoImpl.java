@@ -58,18 +58,25 @@ public class AccountDaoImpl extends BaseDaoImpl<Account> implements AccountDao {
     }
 
     @Override
-    public void batchInsertTemp(List<Account> list) {
-        insert(getPrefix() + "batchInsertTemp", list);
+    public void batchInsertTemp(String tempTabName, List<Account> list) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("tempTabName", tempTabName);
+        params.put("dataList", list);
+        insert(getPrefix() + "batchInsertTemp", params);
     }
 
     @Override
-    public void joinTempData() {
-        update(getPrefix() + "joinTempData");
+    public void joinTempData(String tempTabName) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("tempTabName", tempTabName);
+        update(getPrefix() + "joinTempData", params);
     }
 
     @Override
-    public void truncateTempData() {
-        delete(getPrefix() + "truncateTempData");
+    public void truncateTempData(String tempTabName) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("tempTabName", tempTabName);
+        delete(getPrefix() + "truncateTempData", params);
     }
 
     @Override

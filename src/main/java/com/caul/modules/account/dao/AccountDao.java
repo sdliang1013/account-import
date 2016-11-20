@@ -21,11 +21,11 @@ public interface AccountDao extends StringPojoAppBaseDao<Account> {
 
     boolean existsAccount(Account entity);
 
-    void batchInsertTemp(List<Account> list);
+    void batchInsertTemp(String tempTabName, List<Account> list);
 
-    void joinTempData();
+    void joinTempData(String tempTabName);
 
-    void truncateTempData();
+    void truncateTempData(String tempTabName);
 
     void clear(Date dateEnd);
 }

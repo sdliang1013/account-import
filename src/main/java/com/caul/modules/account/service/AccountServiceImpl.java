@@ -5,6 +5,7 @@ import cn.easybuild.core.exceptions.BusinessException;
 import cn.easybuild.core.exceptions.InvalidOperationException;
 import cn.easybuild.core.service.StringPojoAppBaseServiceImpl;
 import cn.easybuild.core.utils.BeanHelper;
+import cn.easybuild.core.utils.ThreadPoolUtils;
 import cn.easybuild.core.utils.UUIDGenerator;
 import cn.easybuild.pojo.DataSet;
 import com.caul.core.excelimport.bean.SimpleExcelData;
@@ -19,9 +20,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
+import java.util.concurrent.Callable;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ExecutorService;
 
 /**
  * Created by BlueDream on 2016-03-23.
@@ -30,7 +32,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class AccountServiceImpl extends StringPojoAppBaseServiceImpl<Account>
         implements AccountService {
 
-    private static int LIMIT_COUNT = 1000;
+    private static int LIMIT_POOL = 20;//最大线程数
+    private static int LIMIT_STEP = 500;//每次提交大小
+    private static int LIMIT_COUNT = 10000;//excel总限制大小
+    private static String TAB_TEMP = "t_account_temp";
 
     private AccountDao accountDao;
 
@@ -68,28 +73,75 @@ public class AccountServiceImpl extends StringPojoAppBaseServiceImpl<Account>
 
     @Override
     public void importAccount(InputStream inputStream, boolean closeIS) {
-        //TODO: 获取数据
+        //获取数据
         InputStream xmlStream = getClass().getClassLoader().getResourceAsStream(
                 applicationConfig.getXmlImportAccount());
         SimpleExcelData excelData =
                 ExcelImportUtil.simpleReadExcel(xmlStream, inputStream, closeIS);
-        //TODO:写入临时表
-        batchInsertTemp(excelData);
-        //TODO:临时表写入账号表
-        accountDao.joinTempData();
-        //TODO:清除临时表
-        accountDao.truncateTempData();
+        //最大限制
+        if (excelData.getRepeatData().size() > LIMIT_COUNT) {
+            throw new BusinessException(
+                    "数量太大,最大允许行" + LIMIT_COUNT + "记录.");
+        }
+        //多线程运行
+        ExecutorService executorService = ThreadPoolUtils.getCustomThreadPool(LIMIT_POOL);
+        try {
+            List<Account> list = new CopyOnWriteArrayList<>();
+            Account account;
+            try {
+                int idx = 0;
+                int dataLen = excelData.getRepeatData().size();
+                for (Map<String, String> dataMap : excelData.getRepeatData()) {
+                    idx++;
+                    account = toAccount(dataMap);
+                    if (account != null) {
+                        list.add(account);
+                    }
+                    if (list.size() >= LIMIT_STEP || idx >= dataLen) {
+                        final String tempTabName = TAB_TEMP + Double.valueOf(idx / LIMIT_STEP).intValue();
+                        final List<Account> stepList = new ArrayList<>();
+                        stepList.addAll(list);
+                        executorService.submit(new Callable<Object>() {
+                            @Override
+                            public Object call() throws Exception {
+                                //写入数据库
+                                batchInsert(tempTabName, stepList);
+                                return null;
+                            }
+                        });
+                        list.clear();
+                    }
+                }
+            } finally {
+                ThreadPoolUtils.shutdownAndAwaitTermination(executorService, 1800);
+                while (true) {
+                    if (executorService.isTerminated()) {
+                        //临时表写入账号表
+                        accountDao.joinTempData(TAB_TEMP);
+                        //清除临时表
+                        accountDao.truncateTempData(TAB_TEMP);
+                        break;
+                    }
+                    Thread.sleep(5000l);
+                }
+            }
+        } catch (Exception e) {
+            throw new BusinessException("拷贝Excel数据错误:" + e.getMessage(), e);
+        }
+
     }
 
-    private void batchInsertTemp(SimpleExcelData excelData) {
-
-        if(excelData.getRepeatData().size() > LIMIT_COUNT){
-            throw new BusinessException(
-                    "数量太大,最大允许行" + LIMIT_COUNT +"记录.");
+    private void batchInsert(String tempTabName, List<Account> list) {
+        try {
+            //写入临时表
+            accountDao.batchInsertTemp(TAB_TEMP, list);
+            //临时表写入账号表
+//            accountDao.joinTempData(tempTabName);
+            //清除临时表
+//            accountDao.truncateTempData(tempTabName);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        //TODO: 考虑多线程
-        List<Account> list = toAccountList(excelData);
-        accountDao.batchInsertTemp(list);
     }
 
     @Override
@@ -110,27 +162,22 @@ public class AccountServiceImpl extends StringPojoAppBaseServiceImpl<Account>
         return super.save(entity);
     }
 
-    private List<Account> toAccountList(SimpleExcelData excelData) {
-        List<Account> list = new CopyOnWriteArrayList<>();
-        //TODO: 考虑多线程
-        Account account;
+    private Account toAccount(Map<String, String> dataMap) {
+        Account account = null;
+        if (StringUtils.isEmpty(dataMap.get("qq"))
+                && StringUtils.isEmpty(dataMap.get("mobile"))) {//跳过空记录
+            return account;
+        }
         try {
-            for (Map<String, String> dataMap : excelData.getRepeatData()) {
-                if (StringUtils.isEmpty(dataMap.get("qq"))
-                        && StringUtils.isEmpty(dataMap.get("mobile"))) {//跳过空记录
-                    continue;
-                }
-                account = new Account();
-                removeEmptyValue(dataMap);
-                BeanHelper.copyExitProperties(account, dataMap);
-                account.setId(UUIDGenerator.generateUUID());
-                account.setCreateTime(new Date());
-                list.add(account);
-            }
+            account = new Account();
+            removeEmptyValue(dataMap);
+            BeanHelper.copyExitProperties(account, dataMap);
+            account.setId(UUIDGenerator.generateUUID());
+            account.setCreateTime(new Date());
         } catch (Exception e) {
             throw new BusinessException("拷贝Excel数据错误:" + e.getMessage(), e);
         }
-        return list;
+        return account;
     }
 
     /**

@@ -5,7 +5,6 @@
 <mapper namespace="com.caul.modules.account.Account">
 
     <sql id="tableName">t_account</sql>
-    <sql id="tabTemp">t_account_temp</sql>
 
     <!-- 插入记录 -->
     <insert id="insertAccount" parameterType="Account">
@@ -16,12 +15,11 @@
         (#{id}, #{qq}, #{accountName}, #{mobile}, #{handsel}, #{sendState}, #{arbitrage}, #{createTime})
     </insert>
 
-    <insert id="batchInsertTemp" parameterType="list">
-        insert into
-        <include refid="tabTemp"/>
+    <insert id="batchInsertTemp">
+        insert into ${tempTabName}
         (id, qq, account_name, mobile, handsel, send_state,arbitrage,create_time)
         values
-        <foreach collection="list" item="item" separator=",">
+        <foreach collection="dataList" item="item" separator=",">
             (#{item.id}, #{item.qq}, #{item.accountName}, #{item.mobile}, #{item.handsel}, #{item.sendState},
             #{item.arbitrage}, #{item.createTime})
         </foreach>
@@ -43,8 +41,7 @@
     </delete>
 
     <delete id="truncateTempData">
-        TRUNCATE TABLE
-        <include refid="tabTemp"/>
+        TRUNCATE TABLE ${tempTabName}
     </delete>
 
     <delete id="clear" parameterType="date">
@@ -87,12 +84,12 @@
     <update id="joinTempData">
         INSERT INTO
         <include refid="tableName"/>
-        SELECT * FROM
-        <include refid="tabTemp"/>
-        t WHERE NOT EXISTS
-        (SELECT 1 FROM
+        (id, qq, account_name, mobile, handsel, send_state,arbitrage,create_time)
+        SELECT t.id, t.qq, t.account_name, t.mobile, t.handsel, t.send_state,t.arbitrage,t.create_time
+        FROM ${tempTabName} t LEFT JOIN
         <include refid="tableName"/>
-        a WHERE (a.qq != '无' AND a.qq = t.qq) OR (a.mobile != '无' AND a.mobile = t.mobile))
+        a ON a.qq = t.qq AND a.mobile = t.mobile
+        WHERE a.id is null
     </update>
 
     <select id="getAccountById" resultType="Account">
