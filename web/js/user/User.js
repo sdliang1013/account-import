@@ -163,7 +163,7 @@ user.UserEdit = function () {
 
     me.loadForm = function () {
         var url = AppHelper.Url.getManageUrl(user.MODULE_USER + "/detail", {id: $("#hdnId").val()});
-        me.loadEntity(url, "formUserEdit");
+        $("#formUserEdit").form('load', url);
     };
 
     me.onLoadEntity = function (entity) {

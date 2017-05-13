@@ -313,7 +313,7 @@ account.AccountEdit = function () {
 
     me.loadForm = function () {
         var url = AppHelper.Url.getManageUrl(account.MODULE_ACCOUNT + "/detail", {id: $("#hdnId").val()});
-        me.loadEntity(url, "formAccountEdit");
+        $("#formAccountEdit").form('load', url);
     };
 
     me.onLoadEntity = function (entity) {

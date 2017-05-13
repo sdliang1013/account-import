@@ -6,8 +6,11 @@
 
     <groupId>com.caul</groupId>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>../tale</module>
+    </modules>
     <artifactId>account-import</artifactId>
-    <packaging>war</packaging>
+    <packaging>pom</packaging>
 
     <properties>
         <org.springframework-version>4.1.1.RELEASE</org.springframework-version>
