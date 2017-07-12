@@ -172,6 +172,7 @@ public class AccountServiceImpl extends StringPojoAppBaseServiceImpl<Account>
             account = new Account();
             removeEmptyValue(dataMap);
             BeanHelper.copyExitProperties(account, dataMap);
+            account.setHandsel(Double.valueOf(dataMap.get("handsel")).intValue());
             account.setId(UUIDGenerator.generateUUID());
             account.setCreateTime(new Date());
         } catch (Exception e) {
